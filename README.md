@@ -5,6 +5,18 @@
 
 <br>
 
+## Certifications
+
+| 자격증 | 발급 기관 |
+|---|---|
+| SQLD (SQL 개발자) | 한국데이터산업진흥원 |
+| ADsP (데이터분석 준전문가) | 한국데이터산업진흥원 |
+| 정보처리산업기사 | 한국산업인력공단 |
+| 리눅스마스터 2급 | 한국정보통신진흥협회 |
+| 컴퓨터활용능력 2급 | 대한상공회의소 |
+
+<br>
+
 ## Tech Stack
 
 | 분류 | 기술 |
@@ -14,7 +26,7 @@
 | Backend | Spring Boot, Spring Data JPA, Flask |
 | Data | 공공데이터 API 수집 · 적재, 임베딩 기반 벡터 검색 (RAG) |
 | Test | JUnit 5, MockMvc |
-| Infra / Tool | Docker, Docker Compose, Gradle, Git / GitHub, Postman |
+| Infra / Tool | Linux, Docker, Docker Compose, Gradle, Git / GitHub, Postman |
 
 <br>
 
