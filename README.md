@@ -25,7 +25,7 @@
 | Database | MySQL / MariaDB, SQL Server, SQLite, ChromaDB (Vector DB), H2 |
 | Language | SQL, Java, Python, JavaScript |
 | Backend | Spring Boot, Spring Data JPA, Spring JDBC, Flask, Thymeleaf |
-| AI · Data | LLM · RAG (임베딩 기반 벡터 검색), PyTorch, 공공데이터 API 수집 · 적재 |
+| AI · Data | LLM · RAG (임베딩 기반 벡터 검색), 공공데이터 API 수집 · 적재 |
 | Mobile | Capacitor (Android) |
 | Test | JUnit 5, MockMvc |
 | Infra / Tool | Linux, Docker, Docker Compose, GitHub Actions, Gradle, Maven, Git / GitHub, Postman |
@@ -51,12 +51,27 @@
 - Docker Compose 초기화 스크립트로 스키마 생성과 샘플 데이터 적재를 자동화
 - 주간 배치(APScheduler)로 벡터 인덱스를 재구축해 원천 데이터 변경을 검색에 반영
 - 문자셋 `utf8mb4` 통일로 한글 데이터 저장 · 검색 문제 예방
+- FK RESTRICT 제약에 맞춰 글 → 게시판 → 블로그 순서로 한 트랜잭션에서 삭제하도록 수정 (WebBlog)
+- DB 생성 · 마이그레이션 SQL을 단계별(00 ~ 06)로 관리해 신규 설치와 기존 DB 업그레이드 경로를 분리 (WebBlog)
 
 <br>
 
 ## Projects
 
-### [복복이 (WelBot)](https://github.com/Chan-pj/Chatbot) — RAG 기반 복지 정책 안내 AI 챗봇
+### [WebBlog](https://github.com/Chan-pj/WebBlog) — 전자정부프레임워크 기반 멀티 블로그 플랫폼
+`eGovFrame 4.3` `Spring 5.3` `MyBatis` `MariaDB` `JSP` `Tomcat` · 개인 프로젝트
+
+카카오 로그인과 슈퍼 관리자 승인제로 운영되는 멀티 블로그 플랫폼. 회원은 블로그를 개설하거나 다른 블로그에 멤버로 참여
+
+- Controller · Service(Impl) · Mapper · MyBatis XML 구조, Apache Tiles 공통 레이아웃, Maven war 패키징 후 Tomcat 배포
+- SUPER_ADMIN · BLOG_MEMBER 역할과 회원별 블로그·게시판 생성 권한, 권한 변경 즉시 반영(세션 갱신 인터셉터)
+- 다른 블로그 멤버 상태를 바꿀 수 있던 문제(IDOR)를 blog_id 조건과 상태값 검증으로 수정, CSRF 토큰 검증, 로그인 메시지·게시글 출력 XSS 이스케이프(c:out), 오류 화면의 스택 트레이스 노출 제거
+- FK 제약 때문에 실패하던 회원·블로그 삭제를 글 → 게시판 → 블로그 순서로 한 트랜잭션에서 처리하도록 수정
+- DB 생성·마이그레이션 SQL을 단계별(00 ~ 06)로 관리
+
+<br>
+
+### [WelBot](https://github.com/Chan-pj/WelBot) — RAG 기반 복지 정책 안내 AI 챗봇
 `MySQL` `ChromaDB` `Python` `Flask` `Docker` · 2인 팀 프로젝트 · 백엔드 · DB · RAG 담당
 
 공공데이터 5,011건의 복지 정책을 벡터 검색하고, LLM이 사용자 상황과 거주 지역에 맞는 정책을 카드 형태로 추천하는 챗봇
@@ -86,7 +101,7 @@
 가상 종목을 사고팔아 목표 순자산을 달성하는 로그라이크 투자 게임. 웹 브라우저와 Android 앱에서 같은 코드로 실행
 
 - 시장 국면 · 뉴스 출처별 신뢰도 · 상장폐지 · 임대료 · 대출 등 게임 규칙과 상태 관리 로직 구현
-- 전략별 2,500판 이상의 몬테카를로 시뮬레이션으로 난이도별 은퇴율을 측정해 밸런스 조정
+- Claude Code로 게임 규칙을 옮긴 시뮬레이터를 만들어, 전략·난이도 조합별 2,500판 몬테카를로 시뮬레이션으로 은퇴율을 측정하고 밸런스 수치를 조정
 - 게임 상태 · 플레이 기록 · 업적을 SQLite로 저장 (Android: capacitor-sqlite, 웹: sql.js)
 - GitHub Actions로 GitHub Pages 자동 배포, Capacitor로 Android 앱 패키징
 
