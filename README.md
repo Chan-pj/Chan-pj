@@ -65,7 +65,7 @@
 
 - Controller · Service(Impl) · Mapper · MyBatis XML 구조, Apache Tiles 공통 레이아웃, Maven war 패키징 후 Tomcat 배포
 - SUPER_ADMIN · BLOG_MEMBER 역할과 회원별 블로그·게시판 생성 권한, 권한 변경 즉시 반영(세션 갱신 인터셉터)
-- 다른 블로그 멤버 상태를 바꿀 수 있던 문제(IDOR)를 blog_id 조건과 상태값 검증으로 수정, CSRF 토큰 검증, 로그인 메시지·게시글 출력 XSS 이스케이프(c:out), 오류 화면의 스택 트레이스 노출 제거
+- 다른 블로그 멤버 상태를 바꿀 수 있던 문제(IDOR)를 blog_id 조건과 상태값 검증으로 수정, CSRF 토큰 검증, 출력값 XSS 이스케이프(c:out), 오류 화면의 스택 트레이스 노출 제거
 - FK 제약 때문에 실패하던 회원·블로그 삭제를 글 → 게시판 → 블로그 순서로 한 트랜잭션에서 처리하도록 수정
 - DB 생성·마이그레이션 SQL을 단계별(00 ~ 06)로 관리
 
